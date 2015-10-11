@@ -12,7 +12,15 @@ class ProjectBuilder {
 	[MenuItem ("Custom/CI/Build PC")]
 	static void PerformAndroidBuild ()
 	{
-		string target_filename = APP_NAME + ".exe";
+        string target_path = Application.dataPath;
+        target_path = target_path.Replace("Assets", "Build");
+
+        bool exists = System.IO.Directory.Exists(target_path);
+
+        if (!exists)
+            System.IO.Directory.CreateDirectory(target_path);
+
+        string target_filename = target_path +"\\"+ APP_NAME + ".exe";
 		GenericBuild(SCENES, target_filename, BuildTarget.StandaloneWindows ,BuildOptions.None);
 	}
 	
